@@ -1,0 +1,63 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var MarkdownEditor = React.createClass({
+	getInitialState: function() {
+			return{
+					content: localStorage.getItem('markdownStorage') || "### Type Markdown Here"
+			}
+	},
+	handleChange: function(event) {
+		this.setState({
+					content: event.target.value
+		})
+	},
+	rawMarkup: function() {
+		marked.setOptions({
+			renderer: new marked.Renderer(),
+			gfm: true,
+			tables: true,
+			breaks: false,
+			sanitize: true,
+			smartLists: true,
+			smartypants: false,
+			highlight: function (code) {
+						return h1js.highlightAuto(code).value
+			}
+		})
+		var rawMarkup = marked(this.state.content, {sanitize: true})
+		return {
+			__html: rawMarkup
+		}
+	},
+	componentWillMount: function() {
+		const script = document.createElement("script")
+
+		script.src = "./js/storage.js"
+		script.async = true
+
+		document.body.appendChild(script)
+	},
+	render: function(){
+		//<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+				return (
+						<div className="container-fluid">
+								<div className="row">
+												<h1 className="text-center">ReactJS Markdown Editor</h1>
+								<div className="col-xs-12 col-sm-6">
+												<h3>Markdown</h3>
+												<textarea id="markdown" className="markdown" defaultValue={this.state.content} onChange={this.handleChange}></textarea>
+								</div>
+								<div className="col-xs-12 col-sm-6">
+												<h3>Preview</h3>
+												<div id="preview" dangerouslySetInnerHTML={this.rawMarkup()}></div>
+								</div>
+						</div>
+					</div>
+				)
+	}
+})
+ReactDOM.render(
+				<MarkdownEditor />,
+				document.getElementById("app")
+)

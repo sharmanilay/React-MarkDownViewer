@@ -1,0 +1,24 @@
+{
+  "name": "markdownviewer",
+  "version": "1.0.0",
+  "description": "A simple Mark down Viewer using react js",
+  "main": "index.html",
+  "scripts": {
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "deploy": "npm run build && npm run git-commit && npm run git-push"
+  },
+  "author": "Nilay Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "webpack": "^3.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-react": "^6.24.1",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack-dev-server": "^2.6.1"
+  }
+}
